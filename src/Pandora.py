@@ -8,23 +8,25 @@ print """\
 |__)  /\  |\ | |  \ /  \ |__)  /\\
 |    /~~\ | \| |__/ \__/ |  \ /~~\\
 """
-print "Let's get funky\n\n"
+print "Let's get funky"
 
 class Menu:
  def Showmenu(self):
-  print "(S)imple Crypto Checks"
+  print "\n\n(S)imple Crypto Checks"
   print "(A)dvanced Operations"
   print "(P)unch 1o57 in the face"
   print "(Q)uit Pandora"
 
+class Solver:
  def Simple(self):
   execfile("SimpleCryptoChecks.py")
 
+class Chooser:
  def getChoice(self):
   choice = raw_input(">>> ")
   if choice in ('S','s'):
    print 'You chose Simple.'
-   m.Simple()
+   s.Simple()
   if choice in ('A','a'):
    print 'You chose Advanced'
   if choice in ('P','p'):
@@ -33,10 +35,12 @@ class Menu:
    print 'Good luck!'
    sys.exit(0)
 
-#instantitate menu class
+#instantitate classes
 m = Menu()
+s = Solver()
+c = Chooser()
 
 #loop through main menu until the user chooses to quit
 while True:
  m.Showmenu()
- m.getChoice()
+ c.getChoice()
