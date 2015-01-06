@@ -8,8 +8,8 @@ print """\
 """
 print "Let's get funky\n\n"
 
-print "Run (S)imple Crypto Checks"
-print "Run (A)dvanced Operations"
+print "(S)imple Crypto Checks"
+print "(A)dvanced Operations"
 print "(P)unch 1o57 in the face"
 
 choice = raw_input(">>> ")
