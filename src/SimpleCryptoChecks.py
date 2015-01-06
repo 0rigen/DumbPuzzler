@@ -10,6 +10,12 @@ import string
 # chr(97) returns character of given ascii value
 # binascii allows me to convert between binary and ascii
 
+#This module takes a dumb brute-force approach to tackling the more common and simple
+#cryptos that we come across.  It takes the inputted string and tries every possible conversion
+#that is programmed in.
+
+## A few of these are not fully functional yet and need worked on!!
+
 #Resources
 rot13 = string.maketrans(
     "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
@@ -44,7 +50,7 @@ except:
 print '\n'+bcolors.BOLD+bcolors.GREEN+'Transformed into text Values: '+bcolors.ENDC
 try:
 	for num in input:
-		print 'sanity check '+ chr(127)
+		#NOT WORKING!!!
 		print chr(int(num))
 except:
 	pass
@@ -91,6 +97,7 @@ except:
 
 print '\n'+bcolors.BOLD+bcolors.GREEN+'Transformed hex to base10 as pairs: '+bcolors.ENDC
 try:
+	# NOT FINISHED
 			print int(ch,16)
 
 except:
