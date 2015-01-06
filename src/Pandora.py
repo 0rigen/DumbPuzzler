@@ -1,7 +1,7 @@
 __author__ = 'Origen'
 __project__ = 'Pandora'
 
-import sys
+import sys, os
 
 print """\
  __             __   __   __
@@ -17,10 +17,14 @@ class Menu:
   print "(P)unch 1o57 in the face"
   print "(Q)uit Pandora"
 
+ def Simple(self):
+  execfile("SimpleCryptoChecks.py")
+
  def getChoice(self):
   choice = raw_input(">>> ")
   if choice in ('S','s'):
    print 'You chose Simple.'
+   m.Simple()
   if choice in ('A','a'):
    print 'You chose Advanced'
   if choice in ('P','p'):
@@ -29,6 +33,10 @@ class Menu:
    print 'Good luck!'
    sys.exit(0)
 
+#instantitate menu class
 m = Menu()
-m.Showmenu()
-m.getChoice()
+
+#loop through main menu until the user chooses to quit
+while True:
+ m.Showmenu()
+ m.getChoice()
