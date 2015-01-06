@@ -58,6 +58,7 @@ except:
 
 print '\n'+bcolors.BOLD+bcolors.GREEN+'Transformed into binary Values: '+bcolors.ENDC
 try:
+	#This transform fails if it encounters a 'b' in the input.  Need to handle that.
 	for item in input:
 		print bin(int(binascii.hexlify(item), 16)), + '\n'
 except:
@@ -99,7 +100,6 @@ print '\n'+bcolors.BOLD+bcolors.GREEN+'Transformed hex to base10 as pairs: '+bco
 try:
 	# NOT FINISHED
 			print int(ch,16)
-
 except:
 	pass
 	print bcolors.PURPLE + "Pair-wise hex to base10 failed." + bcolors.ENDC
