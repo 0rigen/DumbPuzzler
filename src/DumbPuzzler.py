@@ -1,12 +1,14 @@
-__author__ = 'Origen'
-__project__ = 'Pandora'
+__author__ = '0rigen, 0rigen.net'
 
-import sys, os
+import sys
 
 print """\
- __             __   __   __
-|__)  /\  |\ | |  \ /  \ |__)  /\\
-|    /~~\ | \| |__/ \__/ |  \ /~~\\  v.01
+ _____               _     ______                   _
+(____ \             | |   (_____ \                 | |
+ _   \ \ _   _ ____ | | _  _____) )   _ _____ _____| | ____  ____
+| |   | | | | |    \| || \|  ____/ | | (___  |___  ) |/ _  )/ ___)
+| |__/ /| |_| | | | | |_) ) |    | |_| |/ __/ / __/| ( (/ /| |
+|_____/  \____|_|_|_|____/|_|     \____(_____|_____)_|\____)_|
 """
 print "Let's get funky"
 
@@ -15,7 +17,7 @@ class Menu:
   print "\n\n(S)imple Crypto Checks"
   print "(A)dvanced Operations"
   print "(P)unch 1o57 in the face"
-  print "(Q)uit Pandora"
+  print "(Q)uit DumbPuzzler"
 
 class Solver:
  def Simple(self):
