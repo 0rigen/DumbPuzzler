@@ -44,7 +44,7 @@ class bcolors:
 
 # 'Chunk' means how long each segment is.  If the data string is 235246, a chunk length of 2
 # means that it will be analyzed as 23 52 46.
-crypto_in = raw_input(bcolors.CYAN + 'Your new dataz to analyze --> ' + bcolors.ENDC)  # string of crypto
+crypto_in = raw_input(bcolors.CYAN + 'Your new data to analyze --> ' + bcolors.ENDC)  # string of crypto
 input_length = raw_input(
     bcolors.CYAN + '\nLength of Data Chunks (1 for text/ROTs/etc) --> ' + bcolors.ENDC)  # length of chunks
 print(

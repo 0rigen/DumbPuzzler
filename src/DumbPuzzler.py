@@ -26,8 +26,11 @@ class Menu:
 # Solver #
 #######################
 class Solver:
-    def Simple(self):
+    def simple(self):
         execfile("SimpleCryptoChecks.py")
+
+    def advanced(self):
+        execfile("AdvCryptoChecks.py")
 
 #######################
 # Chooser - for menu  #
@@ -37,9 +40,10 @@ class Chooser:
         choice = raw_input(">>> ")
         if choice in ('S', 's'):
             print 'You chose Simple.'
-            s.Simple()
+            s.simple()
         if choice in ('A', 'a'):
             print 'You chose Advanced'
+            s.advanced()
         if choice in ('P', 'p'):
             print 'You punched 1057!  I hope you feel a little better now...'
         if choice in ('Q', 'q'):
