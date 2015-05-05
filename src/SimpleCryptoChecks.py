@@ -4,10 +4,6 @@ import sys
 import string
 import binascii
 
-# This module takes a dumb brute-force approach to tackling the more common and simple
-# crypto types that we come across.  It takes the inputted string and tries every possible conversion
-# that is programmed in.
-
 ###############
 # Resources   #
 ###############
