@@ -23,6 +23,10 @@ rot23 = string.maketrans(
 # global var to hold the cipher in
 global crypto_in
 
+# Create letter:number dictionary
+# Thanks, Stackoverflow! stackoverflow.com/questions/23199733/convert-numbers-into-corresponding-letter-python
+d = dict(zip(range(1, 27), string.ascii_lowercase))
+
 
 #############################
 # bcolors for coloring text #
@@ -110,6 +114,26 @@ if chunk_size > 1:
 else:
     print "It can't be ASCII code at that chunk size!"
 
+# Check for letters -> numbers (a=1, b=2, etc)
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into numeric alphabet (a=1, etc): ' + TextColors.ENDC
+try:
+    for elem in chunked_array:
+        value = ord(elem) - 96
+        print value,
+except:
+    pass
+    print "Couldn't turn letters into numbers"
+
+# Check for numbers -> letters (1=a, 2=b, etc)
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into text Values: (1=a, etc)' + TextColors.ENDC
+try:
+    for elem in chunked_array:
+        number = int(elem)
+        print (d[number]),
+except:
+    pass
+    print "Couldn't turn numbers into letters"
+
 # Convert into Binary
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into binary Values: ' + TextColors.ENDC
 try:
@@ -174,3 +198,7 @@ else:
     print "It can't be hex2b10 since the chunk size isn't 2..."
 
 print TextColors.BOLD + TextColors.YELLOW + "\n\nI'm done!  Hope you found what you were looking for!\n" + TextColors.ENDC
+
+
+# ToDo:
+# ATBASH

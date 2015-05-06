@@ -1,6 +1,7 @@
 __author__ = '0rigen, 0rigen.net'
 
 import sys
+import os
 
 print """\
  _____               _     ______                   _
@@ -28,10 +29,24 @@ class Menu:
 #######################
 class Solver:
     def simple(self):
-        execfile("SimpleCryptoChecks.py")
+        try:
+            execfile("SimpleCryptoChecks.py")
+        except KeyboardInterrupt:
+            print 'Interrupted - See ya later!'
+            try:
+                sys.exit(0)
+            except SystemExit:
+                os._exit(0)
 
     def advanced(self):
-        execfile("AdvCryptoChecks.py")
+        try:
+            execfile("AdvCryptoChecks.py")
+        except KeyboardInterrupt:
+            print 'Interrupted - See ya later!'
+            try:
+                sys.exit(0)
+            except SystemExit:
+                os._exit(0)
 
 
 #######################
