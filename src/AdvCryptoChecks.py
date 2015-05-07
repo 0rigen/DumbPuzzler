@@ -1,4 +1,12 @@
-__author__ = '0rigen, 0rigen.net'
+#!/usr/bin/env/ python
+"""
+
+"""
+__author__ = "0rigen"
+__email__ = "0rigen@0rigen.net"
+__web__ = "0rigen.net"
+__license__ = "GPL"
+__version__ = 3.0
 
 import sys
 import string
@@ -68,4 +76,4 @@ print 'Input is ' + str(len(crypto_in)) + ' elements long, divided into %d chunk
 # Start Crypto Checks #
 #######################
 
-print "Too bad!  I haven't coded the tough stuff yet!"
+print "\nToo bad!  I haven't coded the tough stuff yet!\n"

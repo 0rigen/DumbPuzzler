@@ -1,4 +1,15 @@
-__author__ = '0rigen, 0rigen.net'
+#!/usr/bin/env/ python
+""" Performs checks for the 'simple' ciphers
+
+This module is called when the user wants to perform (S)imple
+checks.  The module will run through a series of ciphers
+and all output (valid or otherwise) is displayed in the console.
+"""
+__author__ = "0rigen"
+__email__ = "0rigen@0rigen.net"
+__web__ = "0rigen.net"
+__license__ = "GPL"
+__version__ = 3.0
 
 import sys
 import string
@@ -22,11 +33,6 @@ rot23 = string.maketrans(
 
 # global var to hold the cipher in
 global crypto_in
-
-# Create letter:number dictionary
-# Thanks, Stackoverflow! stackoverflow.com/questions/23199733/convert-numbers-into-corresponding-letter-python
-d = dict(zip(range(1, 27), string.ascii_lowercase))
-
 
 #############################
 # bcolors for coloring text #

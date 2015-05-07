@@ -1,4 +1,16 @@
-__author__ = '0rigen, 0rigen.net'
+#!/usr/bin/env/ python
+""" Provides a number of crypto checks to try and quickly decipher simple crypto
+
+Takes a string of ciphertext and a chunk size, then attempts to decipher
+each chunk according to a series of known cipher methods.  All outputs
+are displayed to the console.
+"""
+
+__author__ = "0rigen"
+__email__ = "0rigen@0rigen.net"
+__web__ = "0rigen.net"
+__license__ = "GPL"
+__version__ = 3.0
 
 import sys
 import os
