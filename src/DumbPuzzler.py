@@ -14,6 +14,7 @@ __version__ = 3.0
 
 import sys
 import os
+import base64
 
 print """\
  _____               _     ______                   _
@@ -30,8 +31,7 @@ print """\
 #######################
 class Menu:
     def showmenu(self):
-        print "(S)imple Crypto Checks"
-        print "(A)dvanced Operations"
+        print "(S)imple Encoding Checks"
         print "(P)unch 1o57 in the face"
         print "(Q)uit DumbPuzzler"
 
@@ -42,24 +42,13 @@ class Menu:
 class Solver:
     def simple(self):
         try:
-            execfile("SimpleCryptoChecks.py")
+            execfile("SimpleEncodingChecks.py")
         except KeyboardInterrupt:
             print 'Interrupted - See ya later!'
             try:
                 sys.exit(0)
             except SystemExit:
                 os._exit(0)
-
-    def advanced(self):
-        try:
-            execfile("AdvCryptoChecks.py")
-        except KeyboardInterrupt:
-            print 'Interrupted - See ya later!'
-            try:
-                sys.exit(0)
-            except SystemExit:
-                os._exit(0)
-
 
 #######################
 # Chooser - for menu  #
@@ -70,9 +59,6 @@ class Chooser:
         if choice in ('S', 's'):
             print 'You chose Simple.'
             s.simple()
-        if choice in ('A', 'a'):
-            print 'You chose Advanced'
-            s.advanced()
         if choice in ('P', 'p'):
             print 'You punched 1057!  I hope you feel a little better now...\n'
         if choice in ('Q', 'q'):

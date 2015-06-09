@@ -14,6 +14,7 @@ __version__ = 3.0
 import sys
 import string
 import binascii
+import base64
 
 ###############
 # Resources   #
@@ -103,7 +104,7 @@ try:
             print ord(thing),
 except:
     pass
-    print "Transforming into ASCII values failed."
+    print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
 
 # Check for Text Transformation
 # the ASCII range of printable chars is 040-176, so I will need to scan the input string
@@ -116,9 +117,9 @@ if chunk_size > 1:
             print chr(dig),
     except:
         pass
-        print "Transforming into text failed."
+        print TextColors.RED+"Transforming into text failed."+TextColors.ENDC
 else:
-    print "It can't be ASCII code at that chunk size!"
+    print TextColors.RED+"It can't be ASCII code at that chunk size!"+TextColors.ENDC
 
 # Check for letters -> numbers (a=1, b=2, etc)
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into numeric alphabet (a=1, etc): ' + TextColors.ENDC
@@ -128,7 +129,7 @@ try:
         print value,
 except:
     pass
-    print "Couldn't turn letters into numbers"
+    print TextColors.RED+"Couldn't turn letters into numbers"+TextColors.ENDC
 
 # Check for numbers -> letters (1=a, 2=b, etc)
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into text Values: (1=a, etc)' + TextColors.ENDC
@@ -138,7 +139,7 @@ try:
         print (d[number]),
 except:
     pass
-    print "Couldn't turn numbers into letters"
+    print TextColors.RED+"Couldn't turn numbers into letters"+TextColors.ENDC
 
 # Convert into Binary
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into binary Values: ' + TextColors.ENDC
@@ -151,7 +152,7 @@ try:
             print '0b01100010'
 except:
     pass
-    print "Transforming into binary failed."
+    print TextColors.RED+"Transforming into binary failed."+TextColors.ENDC
 
 # Convert FROM Binary to Integer (INCOMPLETE)
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming binary to Integers: ' + TextColors.ENDC
@@ -160,7 +161,7 @@ try:
         print int(item, 2),  # puts the item into integer form, from base 2 :D Python so ez!
 except:
     pass
-    print "Transforming binary to Integer failed."
+    print TextColors.RED+"Transforming binary to Integer failed."+TextColors.ENDC
 
 # Convert into Hex Values
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into hex Values:UNFINISHED*** ' + TextColors.ENDC
@@ -171,9 +172,9 @@ if chunk_size == 2:
             print binascii.unhexlify('%x' % n)
     except:
         pass
-        print "Transforming into hex failed."
+        print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
 else:
-    print "Can't be hex values unless chunk size is 2..."
+    print TextColors.RED+"Can't be hex values unless chunk size is 2..."+TextColors.ENDC
 
 # ROT13
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT13: ' + TextColors.ENDC
@@ -181,7 +182,7 @@ try:
     print string.translate(crypto_in, rot13)
 except:
     pass
-    print "ROT13 failed."
+    print TextColors.RED+"ROT13 failed."+TextColors.ENDC
 
 # ROT23
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT23: ' + TextColors.ENDC
@@ -189,7 +190,7 @@ try:
     print string.translate(crypto_in, rot23)
 except:
     pass
-    print "ROT23 failed."
+    print TextColors.RED+"ROT23 failed."+TextColors.ENDC
 
 # Convert from Hex to Base10
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed hex to base10 as singles: ' + TextColors.ENDC
@@ -199,12 +200,24 @@ if chunk_size == 2:
             print int(h, 16),
     except:
         pass
-        print '\n' + "Single hex to base10 failed."
+        print '\n' + TextColors.RED+"Single hex to base10 failed**"+TextColors.ENDC
 else:
-    print "It can't be hex2b10 since the chunk size isn't 2..."
+    print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..**."+TextColors.ENDC
 
-print TextColors.BOLD + TextColors.YELLOW + "\n\nI'm done!  Hope you found what you were looking for!\n" + TextColors.ENDC
+#Try to decode from base64
+print '\n' + TextColors.BOLD + TextColors.PURPLE + 'Attempting to decode as base64: ' + TextColors.ENDC
+try:
+    encoded = crypto_in
+    print base64.b64decode(encoded)
+except TypeError:
+    pass
+    print TextColors.RED+'\nTypeError Decoding Base64: Non-alphabet characters or improper padding of input' \
+                         'string, most likely'+TextColors.ENDC
+except:
+    pass
+    print '\n' + TextColors.RED+"Base64 failed"+TextColors.ENDC
 
+print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were looking for!\n" + TextColors.ENDC
 
 # ToDo:
 # ATBASH
