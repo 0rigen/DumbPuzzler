@@ -20,7 +20,13 @@ import base64
 # Resources   #
 ###############
 
-# Rot13 translate key
+# Atbash translate key
+global atbash
+atbash = string.maketrans(
+    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
+    "zyxwvutsrqponZYXWVUTSRQPONmlkjihgfedcbaMLKJIHGFEDCBA")
+
+#  Rot13 translate key
 global rot13
 rot13 = string.maketrans(
     "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
@@ -192,6 +198,14 @@ except:
     pass
     print TextColors.RED+"ROT23 failed."+TextColors.ENDC
 
+# ATBASH
+print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ATBASH ' + TextColors.ENDC
+try:
+    print string.translate(crypto_in, atbash)
+except:
+    pass
+    print TextColors.RED+"ATBASH failed."+TextColors.ENDC
+
 # Convert from Hex to Base10
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed hex to base10 as singles: ' + TextColors.ENDC
 if chunk_size == 2:
@@ -202,7 +216,7 @@ if chunk_size == 2:
         pass
         print '\n' + TextColors.RED+"Single hex to base10 failed**"+TextColors.ENDC
 else:
-    print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..**."+TextColors.ENDC
+    print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..."+TextColors.ENDC
 
 #Try to decode from base64
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'Attempting to decode as base64: ' + TextColors.ENDC
