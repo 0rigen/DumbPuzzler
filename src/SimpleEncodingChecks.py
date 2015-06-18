@@ -105,7 +105,7 @@ print '\n' + TextColors.PURPLE + TextColors.BOLD + 'Transformed into ASCII Code 
 try:
     for thing in chunked_array:
         if ord(thing) > 176:
-            print 'Not ASCII',
+            print '[Not ASCII]',
         else:
             print ord(thing),
 except:
@@ -113,8 +113,6 @@ except:
     print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
 
 # Check for Text Transformation
-# the ASCII range of printable chars is 040-176, so I will need to scan the input string
-# for combinations of 2-3 digits that match an ASCII code.
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into text Values: ' + TextColors.ENDC
 if chunk_size > 1:
     try:
@@ -166,21 +164,27 @@ try:
     for item in chunked_array:
         print int(item, 2),  # puts the item into integer form, from base 2 :D Python so ez!
 except:
-    pass
     print TextColors.RED+"Transforming binary to Integer failed."+TextColors.ENDC
 
 # Convert into Hex Values
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into hex Values:UNFINISHED*** ' + TextColors.ENDC
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into hex Values:UNFINISHED ' + TextColors.ENDC
 if chunk_size == 2:
     try:
         for item in chunked_array:
             n = int(item, 2)
             print binascii.unhexlify('%x' % n)
     except:
-        pass
         print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
 else:
     print TextColors.RED+"Can't be hex values unless chunk size is 2..."+TextColors.ENDC
+
+# Convert from Hex into ASCII
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed out of Hex into ASCII (ignoring chunk size):' + TextColors.ENDC
+try:
+    out = ''.join(chr(int(crypto_in[i:i+2], 16)) for i in range(0, len(crypto_in), 2))
+    print out
+except:
+    print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
 
 # ROT13
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT13: ' + TextColors.ENDC
@@ -214,7 +218,7 @@ if chunk_size == 2:
             print int(h, 16),
     except:
         pass
-        print '\n' + TextColors.RED+"Single hex to base10 failed**"+TextColors.ENDC
+        print '\n' + TextColors.RED+"Single hex to base10 failed"+TextColors.ENDC
 else:
     print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..."+TextColors.ENDC
 
@@ -231,7 +235,7 @@ except:
     pass
     print '\n' + TextColors.RED+"Base64 failed"+TextColors.ENDC
 
-print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were looking for!\n" + TextColors.ENDC
-
-# ToDo:
-# ATBASH
+print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were " \
+                                            "looking for!\n" + TextColors.ENDC
+print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on http://oeis.org for a " \
+                                            "named sequence!" + TextColors.ENDC + "\n"
