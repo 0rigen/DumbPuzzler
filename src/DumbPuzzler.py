@@ -14,26 +14,19 @@ __version__ = 3.0
 
 import sys
 import os
-import base64
 
-print """\
- _____               _     ______                   _
-(____ \             | |   (_____ \                 | |
- _   \ \ _   _ ____ | | _  _____) )   _ _____ _____| | ____  ____
-| |   | | | | |    \| || \|  ____/ | | (___  |___  ) |/ _  )/ ___)
-| |__/ /| |_| | | | | |_) ) |    | |_| |/ __/ / __/| ( (/ /| |
-|_____/  \____|_|_|_|____/|_|     \____(_____|_____)_|\____)_|
-"""
-
+print '\n\033[95m' + 'DumbPuzzler v1.0' + '\033[0m'
+print '\033[92m' + 'by: @_0rigen' + '\033[0m'
+print '\nSelect an option to continue'
 
 #######################
 # Menu for operations #
 #######################
 class Menu:
     def showmenu(self):
-        print "(S)imple Encoding Checks"
-        print "(P)unch 1o57 in the face"
-        print "(Q)uit DumbPuzzler"
+        print "(" + '\033[1m\033[95m' + "S" + '\033[0m' + ")imple Encoding Checks"
+        print "(" + '\033[1m\033[95m' + "P" + '\033[0m' + ")unch 1o57 in the face"
+        print "(" + '\033[1m\033[95m' + "Q" + '\033[0m' + ")uit DumbPuzzler"
 
 
 #######################

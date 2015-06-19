@@ -41,6 +41,9 @@ rot23 = string.maketrans(
 # global var to hold the cipher in
 global crypto_in
 
+# letters 2 numbers dictionary
+l2nd = { x+1: chr(ord('a')+x) for x in range(26) }
+
 #############################
 # bcolors for coloring text #
 #############################
@@ -64,7 +67,7 @@ crypto_in = raw_input(TextColors.GREEN + 'Your new data to analyze --> ' + TextC
 input_length = raw_input(
     TextColors.GREEN + '\nLength of Data Chunks (1 for text/ROTs/etc) --> ' + TextColors.ENDC)  # length of chunks
 print(
-    '\n\n' + TextColors.GREEN + "Original Input (chunk length " + input_length + "): " + TextColors.BOLD + crypto_in + TextColors.ENDC)
+    '\n' + TextColors.GREEN + "Original Input (chunk length " + input_length + "): " + TextColors.BOLD + crypto_in + TextColors.ENDC)
 
 # Convert inputted chunk size to an integer
 try:
@@ -99,7 +102,6 @@ print TextColors.GREEN + 'Input is ' + str(len(crypto_in)) + ' elements long, di
 #######################
 # Start Crypto Checks #
 #######################
-
 # Check for ASCII Code Conversion
 print '\n' + TextColors.PURPLE + TextColors.BOLD + 'Transformed into ASCII Code Values: ' + TextColors.ENDC
 try:
@@ -114,19 +116,19 @@ except:
 
 # Check for Text Transformation
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into text Values: ' + TextColors.ENDC
-if chunk_size > 1:
-    try:
-        for code in chunked_array:
-            dig = int(code)
-            print chr(dig),
-    except:
-        pass
-        print TextColors.RED+"Transforming into text failed."+TextColors.ENDC
-else:
-    print TextColors.RED+"It can't be ASCII code at that chunk size!"+TextColors.ENDC
+try:
+    for code in chunked_array:
+        ltr = int(code.lstrip('0'))
+        if ltr > 26:
+            print TextColors.RED + "[Not a letter]" + TextColors.ENDC
+        else:
+            print(l2nd[ltr]),
+except:
+    pass
+    print TextColors.RED+"Transforming into text failed."+TextColors.ENDC
 
 # Check for letters -> numbers (a=1, b=2, etc)
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into numeric alphabet (a=1, etc): ' + TextColors.ENDC
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming letters into numeric alphabet (a=1, etc): ' + TextColors.ENDC
 try:
     for elem in chunked_array:
         value = ord(elem) - 96
@@ -136,7 +138,7 @@ except:
     print TextColors.RED+"Couldn't turn letters into numbers"+TextColors.ENDC
 
 # Check for numbers -> letters (1=a, 2=b, etc)
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into text Values: (1=a, etc)' + TextColors.ENDC
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming numbers into text values: (1=a, etc)' + TextColors.ENDC
 try:
     for elem in chunked_array:
         number = int(elem)
@@ -158,8 +160,8 @@ except:
     pass
     print TextColors.RED+"Transforming into binary failed."+TextColors.ENDC
 
-# Convert FROM Binary to Integer (INCOMPLETE)
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming binary to Integers: ' + TextColors.ENDC
+# Convert FROM Binary to Integer
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming from binary into Integers: ' + TextColors.ENDC
 try:
     for item in chunked_array:
         print int(item, 2),  # puts the item into integer form, from base 2 :D Python so ez!
@@ -168,6 +170,7 @@ except:
 
 # Convert into Hex Values
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into hex Values:UNFINISHED ' + TextColors.ENDC
+print TextColors.CYAN + "This doesn't work, try it manually for now" + TextColors.ENDC
 if chunk_size == 2:
     try:
         for item in chunked_array:
@@ -179,7 +182,8 @@ else:
     print TextColors.RED+"Can't be hex values unless chunk size is 2..."+TextColors.ENDC
 
 # Convert from Hex into ASCII
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed out of Hex into ASCII (ignoring chunk size):' + TextColors.ENDC
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed out of Hex into ASCII (ignoring chunk' \
+                                                     ' size, sry not sry):' + TextColors.ENDC
 try:
     out = ''.join(chr(int(crypto_in[i:i+2], 16)) for i in range(0, len(crypto_in), 2))
     print out
@@ -222,7 +226,7 @@ if chunk_size == 2:
 else:
     print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..."+TextColors.ENDC
 
-#Try to decode from base64
+# Try to decode from base64
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'Attempting to decode as base64: ' + TextColors.ENDC
 try:
     encoded = crypto_in
@@ -235,6 +239,7 @@ except:
     pass
     print '\n' + TextColors.RED+"Base64 failed"+TextColors.ENDC
 
+### All done! ###
 print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were " \
                                             "looking for!\n" + TextColors.ENDC
 print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on http://oeis.org for a " \
