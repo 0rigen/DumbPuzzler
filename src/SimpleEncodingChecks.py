@@ -67,13 +67,17 @@ crypto_in = raw_input(TextColors.GREEN + 'Your new data to analyze --> ' + TextC
 input_length = raw_input(
     TextColors.GREEN + '\nLength of Data Chunks (1 for text/ROTs/etc) --> ' + TextColors.ENDC)  # length of chunks
 print(
-    '\n' + TextColors.GREEN + "Original Input (chunk length " + input_length + "): " + TextColors.BOLD + crypto_in + TextColors.ENDC)
+    '\n' + TextColors.GREEN + "Original Input (chunk length " + input_length + "): " + TextColors.BOLD +
+                                                                    crypto_in + TextColors.ENDC)
 
 # Convert inputted chunk size to an integer
 try:
     chunk_size = int(input_length)
 except ValueError:
     print 'Chunk size must be an Integer!'
+
+# Strip out all spaces, they're nasty
+crypto_in = crypto_in.replace(" ", "")
 
 ######################
 # Chunk up the input #
@@ -102,7 +106,7 @@ print TextColors.GREEN + 'Input is ' + str(len(crypto_in)) + ' elements long, di
 #######################
 # Start Crypto Checks #
 #######################
-# Check for ASCII Code Conversion
+# Convert alpha into ASCII codes
 print '\n' + TextColors.PURPLE + TextColors.BOLD + 'Transformed into ASCII Code Values: ' + TextColors.ENDC
 try:
     for thing in chunked_array:
@@ -114,13 +118,25 @@ except:
     pass
     print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
 
+# Convert ASCII codes into alpha
+print '\n' + TextColors.PURPLE + TextColors.BOLD + 'Transforming from ASCII codes to text: ' + TextColors.ENDC
+try:
+    for thing in chunked_array:
+        if int(thing) > 176:
+            print '[Not ASCII]',
+        else:
+            print str(unichr(int(thing))),
+except:
+    pass
+    print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
+
 # Check for Text Transformation
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into text Values: ' + TextColors.ENDC
+print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming from numbers to alpha (1-26): ' + TextColors.ENDC
 try:
     for code in chunked_array:
         ltr = int(code.lstrip('0'))
         if ltr > 26:
-            print TextColors.RED + "[Not a letter]" + TextColors.ENDC
+            print TextColors.RED + "[Not a letter]" + TextColors.ENDC,
         else:
             print(l2nd[ltr]),
 except:
@@ -136,16 +152,6 @@ try:
 except:
     pass
     print TextColors.RED+"Couldn't turn letters into numbers"+TextColors.ENDC
-
-# Check for numbers -> letters (1=a, 2=b, etc)
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming numbers into text values: (1=a, etc)' + TextColors.ENDC
-try:
-    for elem in chunked_array:
-        number = int(elem)
-        print (d[number]),
-except:
-    pass
-    print TextColors.RED+"Couldn't turn numbers into letters"+TextColors.ENDC
 
 # Convert into Binary
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into binary Values: ' + TextColors.ENDC
@@ -233,7 +239,7 @@ try:
     print base64.b64decode(encoded)
 except TypeError:
     pass
-    print TextColors.RED+'\nTypeError Decoding Base64: Non-alphabet characters or improper padding of input' \
+    print TextColors.RED+'TypeError Decoding Base64: Non-alphabet characters or improper padding of input' \
                          'string, most likely'+TextColors.ENDC
 except:
     pass
