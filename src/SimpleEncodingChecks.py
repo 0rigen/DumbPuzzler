@@ -24,7 +24,7 @@ import base64
 global atbash
 atbash = string.maketrans(
     "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-    "zyxwvutsrqponZYXWVUTSRQPONmlkjihgfedcbaMLKJIHGFEDCBA")
+    "ZYXWVUTSRQPONzyxwvutsrqponMLKJIHGFEDCBAmlkjihgfedcba")
 
 #  Rot13 translate key
 global rot13
