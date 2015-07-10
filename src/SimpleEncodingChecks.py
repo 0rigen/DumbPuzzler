@@ -15,6 +15,7 @@ import sys
 import string
 import binascii
 import base64
+import encodings
 
 ###############
 # Resources   #
@@ -103,10 +104,9 @@ except ValueError:
 print TextColors.GREEN + 'Input is ' + str(len(crypto_in)) + ' elements long, divided into %d chunks' % \
                                                              chunked_array.__len__() + TextColors.ENDC
 
-#######################
-# Start Crypto Checks #
-#######################
-# Convert alpha into ASCII codes
+########################
+# Alpha --> ASCII Code #
+########################
 print '\n' + TextColors.PURPLE + TextColors.BOLD + 'Transformed into ASCII Code Values: ' + TextColors.ENDC
 try:
     for thing in chunked_array:
@@ -118,7 +118,9 @@ except:
     pass
     print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
 
-# Convert ASCII codes into alpha
+########################
+# ASCII Code --> Alpha #
+########################
 print '\n' + TextColors.PURPLE + TextColors.BOLD + 'Transforming from ASCII codes to text: ' + TextColors.ENDC
 try:
     for thing in chunked_array:
@@ -130,7 +132,9 @@ except:
     pass
     print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
 
-# Check for Text Transformation
+########################
+#  Numbers to Letters  #
+########################
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming from numbers to alpha (1-26): ' + TextColors.ENDC
 try:
     for code in chunked_array:
@@ -143,7 +147,9 @@ except:
     pass
     print TextColors.RED+"Transforming into text failed."+TextColors.ENDC
 
-# Check for letters -> numbers (a=1, b=2, etc)
+########################
+#  Letters to Numbers  #
+########################
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming letters into numeric alphabet (a=1, etc): ' + TextColors.ENDC
 try:
     for elem in chunked_array:
@@ -153,7 +159,9 @@ except:
     pass
     print TextColors.RED+"Couldn't turn letters into numbers"+TextColors.ENDC
 
-# Convert into Binary
+########################
+# CipherTxt --> Binary #
+########################
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into binary Values: ' + TextColors.ENDC
 try:
     # This transform fails if it encounters a 'b' in the input.  That is handled as a special case
@@ -166,7 +174,9 @@ except:
     pass
     print TextColors.RED+"Transforming into binary failed."+TextColors.ENDC
 
-# Convert FROM Binary to Integer
+########################
+#  Binary --> Integer  #
+########################
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transforming from binary into Integers: ' + TextColors.ENDC
 try:
     for item in chunked_array:
@@ -174,20 +184,9 @@ try:
 except:
     print TextColors.RED+"Transforming binary to Integer failed."+TextColors.ENDC
 
-# Convert into Hex Values
-print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed into hex Values:UNFINISHED ' + TextColors.ENDC
-print TextColors.CYAN + "This doesn't work, try it manually for now" + TextColors.ENDC
-if chunk_size == 2:
-    try:
-        for item in chunked_array:
-            n = int(item, 2)
-            print binascii.unhexlify('%x' % n)
-    except:
-        print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
-else:
-    print TextColors.RED+"Can't be hex values unless chunk size is 2..."+TextColors.ENDC
-
-# Convert from Hex into ASCII
+########################
+#     Hex --> Text     #
+########################
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed out of Hex into ASCII (ignoring chunk' \
                                                      ' size, sry not sry):' + TextColors.ENDC
 try:
@@ -196,7 +195,9 @@ try:
 except:
     print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
 
-# ROT13
+########################
+#        ROT13         #
+########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT13: ' + TextColors.ENDC
 try:
     print string.translate(crypto_in, rot13)
@@ -204,7 +205,9 @@ except:
     pass
     print TextColors.RED+"ROT13 failed."+TextColors.ENDC
 
-# ROT23
+########################
+#         ROT23        #
+########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT23: ' + TextColors.ENDC
 try:
     print string.translate(crypto_in, rot23)
@@ -212,7 +215,9 @@ except:
     pass
     print TextColors.RED+"ROT23 failed."+TextColors.ENDC
 
-# ATBASH
+########################
+#        ATBASH        #
+########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ATBASH ' + TextColors.ENDC
 try:
     print string.translate(crypto_in, atbash)
@@ -220,7 +225,9 @@ except:
     pass
     print TextColors.RED+"ATBASH failed."+TextColors.ENDC
 
-# Convert from Hex to Base10
+########################
+#    Hex --> Base10    #
+########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed hex to base10 as singles: ' + TextColors.ENDC
 if chunk_size == 2:
     try:
@@ -232,7 +239,9 @@ if chunk_size == 2:
 else:
     print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..."+TextColors.ENDC
 
-# Try to decode from base64
+########################
+#    Base64 Decoding   #
+########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'Attempting to decode as base64: ' + TextColors.ENDC
 try:
     encoded = crypto_in
@@ -245,7 +254,9 @@ except:
     pass
     print '\n' + TextColors.RED+"Base64 failed"+TextColors.ENDC
 
-### All done! ###
+########################
+# Print final warnings #
+########################
 print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were " \
                                             "looking for!\n" + TextColors.ENDC
 print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on http://oeis.org for a " \
