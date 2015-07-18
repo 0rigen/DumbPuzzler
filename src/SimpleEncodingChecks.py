@@ -15,6 +15,7 @@ import sys
 import string
 import binascii
 import base64
+import time
 import encodings
 
 ###############
@@ -27,7 +28,7 @@ atbash = string.maketrans(
     "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
     "ZYXWVUTSRQPONzyxwvutsrqponMLKJIHGFEDCBAmlkjihgfedcba")
 
-#  Rot13 translate key
+# Rot13 translate key
 global rot13
 rot13 = string.maketrans(
     "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
@@ -69,13 +70,17 @@ input_length = raw_input(
     TextColors.GREEN + '\nLength of Data Chunks (1 for text/ROTs/etc) --> ' + TextColors.ENDC)  # length of chunks
 print(
     '\n' + TextColors.GREEN + "Original Input (chunk length " + input_length + "): " + TextColors.BOLD +
-                                                                    crypto_in + TextColors.ENDC)
+                                                    crypto_in + TextColors.ENDC)
 
 # Convert inputted chunk size to an integer
 try:
     chunk_size = int(input_length)
+    done=true
 except ValueError:
-    print 'Chunk size must be an Integer!'
+    print TextColors.RED + TextColors.BOLD + '\nChunk size must be an Integer!'
+    print "I'm just going to assume you meant " + TextColors.BLUE + TextColors.BOLD + "'1'\n" + TextColors.ENDC
+    chunk_size = 1
+    time.sleep(2)
 
 # Strip out all spaces, they're nasty
 crypto_in = crypto_in.replace(" ", "")
@@ -182,7 +187,20 @@ try:
     for item in chunked_array:
         print int(item, 2),  # puts the item into integer form, from base 2 :D Python so ez!
 except:
-    print TextColors.RED+"Transforming binary to Integer failed."+TextColors.ENDC
+    print TextColors.RED+"\nTransforming binary to Integer failed."+TextColors.ENDC
+
+########################
+# Binary --> ASCII Ltr #
+########################
+print '\n\n' + TextColors.PURPLE + TextColors.BOLD + 'Transformed from binary to text ' + TextColors.ENDC
+try:
+    for thing in chunked_array:
+            n = int(thing, 2)
+            print binascii.unhexlify('%x' % n),
+
+except:
+    pass
+    print TextColors.RED+"\nTransforming from binary to text failed."+TextColors.ENDC
 
 ########################
 #     Hex --> Text     #
@@ -259,5 +277,5 @@ except:
 ########################
 print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were " \
                                             "looking for!\n" + TextColors.ENDC
-print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on http://oeis.org for a " \
-                                            "named sequence!" + TextColors.ENDC + "\n"
+print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on" \
+                          "http://oeis.org for a named sequence!" + TextColors.ENDC + "\n"
