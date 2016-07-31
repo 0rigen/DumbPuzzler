@@ -11,11 +11,10 @@ __web__ = "0rigen.net"
 __license__ = "GPL"
 __version__ = 3.0
 
-import sys
-import string
-import binascii
 import base64
-import encodings
+import binascii
+import string
+import sys
 
 ###############
 # Resources   #
@@ -27,23 +26,12 @@ atbash = string.maketrans(
     "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
     "ZYXWVUTSRQPONzyxwvutsrqponMLKJIHGFEDCBAmlkjihgfedcba")
 
-#  Rot13 translate key
-global rot13
-rot13 = string.maketrans(
-    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-    "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm")
-
-# Rot23 translate key
-global rot23
-rot23 = string.maketrans(
-    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-    "XYZABCDEFGHIJxyzabcdefghijKLMNOPQRSTUVWklmnopqrstuvw")
-
 # global var to hold the cipher in
 global crypto_in
 
 # letters 2 numbers dictionary
-l2nd = { x+1: chr(ord('a')+x) for x in range(26) }
+l2nd = {x + 1: chr(ord('a') + x) for x in range(26)}
+
 
 #############################
 # bcolors for coloring text #
@@ -60,6 +48,7 @@ class TextColors:
     UNDERLINE = '\033[4m'
     ENDC = '\033[0m'
 
+
 #######################
 # Get input from user #
 #######################
@@ -69,7 +58,7 @@ input_length = raw_input(
     TextColors.GREEN + '\nLength of Data Chunks (1 for text/ROTs/etc) --> ' + TextColors.ENDC)  # length of chunks
 print(
     '\n' + TextColors.GREEN + "Original Input (chunk length " + input_length + "): " + TextColors.BOLD +
-                                                                    crypto_in + TextColors.ENDC)
+    crypto_in + TextColors.ENDC)
 
 # Convert inputted chunk size to an integer
 try:
@@ -87,7 +76,7 @@ try:
     inarray = list(crypto_in)  # turn the input into an array of elements
 
     # Break the array up into chunks of size input_length
-    list_of_chunks = lambda lst, sz: [lst[i:i+sz] for i in range(0, len(lst), sz)]
+    list_of_chunks = lambda lst, sz: [lst[i:i + sz] for i in range(0, len(lst), sz)]
     chunked_array = list_of_chunks(inarray, chunk_size)
 
     # create strings out of the chunks
@@ -116,7 +105,7 @@ try:
             print ord(thing),
 except:
     pass
-    print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
+    print TextColors.RED + "Transforming into ASCII values failed." + TextColors.ENDC
 
 ########################
 # ASCII Code --> Alpha #
@@ -130,7 +119,7 @@ try:
             print str(unichr(int(thing))),
 except:
     pass
-    print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
+    print TextColors.RED + "Transforming into ASCII values failed." + TextColors.ENDC
 
 ########################
 #  Numbers to Letters  #
@@ -145,7 +134,7 @@ try:
             print(l2nd[ltr]),
 except:
     pass
-    print TextColors.RED+"Transforming into text failed."+TextColors.ENDC
+    print TextColors.RED + "Transforming into text failed." + TextColors.ENDC
 
 ########################
 #  Letters to Numbers  #
@@ -157,7 +146,7 @@ try:
         print value,
 except:
     pass
-    print TextColors.RED+"Couldn't turn letters into numbers"+TextColors.ENDC
+    print TextColors.RED + "Couldn't turn letters into numbers" + TextColors.ENDC
 
 ########################
 # CipherTxt --> Binary #
@@ -172,7 +161,7 @@ try:
             print '0b01100010'
 except:
     pass
-    print TextColors.RED+"Transforming into binary failed."+TextColors.ENDC
+    print TextColors.RED + "Transforming into binary failed." + TextColors.ENDC
 
 ########################
 #  Binary --> Integer  #
@@ -182,7 +171,7 @@ try:
     for item in chunked_array:
         print int(item, 2),  # puts the item into integer form, from base 2 :D Python so ez!
 except:
-    print TextColors.RED+"Transforming binary to Integer failed."+TextColors.ENDC
+    print TextColors.RED + "Transforming binary to Integer failed." + TextColors.ENDC
 
 ########################
 #     Hex --> Text     #
@@ -190,32 +179,39 @@ except:
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed out of Hex into ASCII (ignoring chunk' \
                                                      ' size, sry not sry):' + TextColors.ENDC
 try:
-    out = ''.join(chr(int(crypto_in[i:i+2], 16)) for i in range(0, len(crypto_in), 2))
+    out = ''.join(chr(int(crypto_in[i:i + 2], 16)) for i in range(0, len(crypto_in), 2))
     print out
 except:
-    print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
+    print TextColors.RED + "Transforming into hex failed." + TextColors.ENDC
 
 ########################
-#        ROT13         #
+#        ROT           #
 ########################
-print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT13: ' + TextColors.ENDC
-try:
-    print string.translate(crypto_in, rot13)
-except:
-    pass
-    print TextColors.RED+"ROT13 failed."+TextColors.ENDC
+print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT: ' + TextColors.ENDC
+message = crypto_in
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # loop through every possible key
+for key in range(len(alphabet)):
 
-########################
-#         ROT23        #
-########################
-print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT23: ' + TextColors.ENDC
-try:
-    print string.translate(crypto_in, rot23)
-except:
-    pass
-    print TextColors.RED+"ROT23 failed."+TextColors.ENDC
+    rot_out = ''
 
-########################
+    # rot each letter in the input ciphertext
+    for symbol in message:
+        if symbol.capitalize() in alphabet:
+            num = alphabet.find(symbol.capitalize())  # get the number of the symbol
+            num = num + key
+
+            # handle the wrap-around if num is 26 or larger or less than 0
+            if num > 25:
+                num = num - 26
+
+            # add number's symbol at the end of translated
+            rot_out = rot_out + alphabet[num]
+
+        else:
+            # just add the symbol without encrypting/decrypting
+            rot_out = rot_out + symbol
+    # display the current key being tested, along with its decryption
+    print('Key #%s: %s' % (key, rot_out))  ########################
 #        ATBASH        #
 ########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ATBASH ' + TextColors.ENDC
@@ -223,7 +219,7 @@ try:
     print string.translate(crypto_in, atbash)
 except:
     pass
-    print TextColors.RED+"ATBASH failed."+TextColors.ENDC
+    print TextColors.RED + "ATBASH failed." + TextColors.ENDC
 
 ########################
 #    Hex --> Base10    #
@@ -235,9 +231,9 @@ if chunk_size == 2:
             print int(h, 16),
     except:
         pass
-        print '\n' + TextColors.RED+"Single hex to base10 failed"+TextColors.ENDC
+        print '\n' + TextColors.RED + "Single hex to base10 failed" + TextColors.ENDC
 else:
-    print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..."+TextColors.ENDC
+    print TextColors.RED + "It can't be hex2b10 since the chunk size isn't 2..." + TextColors.ENDC
 
 ########################
 #    Base64 Decoding   #
@@ -248,11 +244,11 @@ try:
     print base64.b64decode(encoded)
 except TypeError:
     pass
-    print TextColors.RED+'TypeError Decoding Base64: Non-alphabet characters or improper padding of input' \
-                         'string, most likely'+TextColors.ENDC
+    print TextColors.RED + 'TypeError Decoding Base64: Non-alphabet characters or improper padding of input' \
+                           'string, most likely' + TextColors.ENDC
 except:
     pass
-    print '\n' + TextColors.RED+"Base64 failed"+TextColors.ENDC
+    print '\n' + TextColors.RED + "Base64 failed" + TextColors.ENDC
 
 ########################
 # Print final warnings #
@@ -260,4 +256,4 @@ except:
 print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were " \
                                             "looking for!\n" + TextColors.ENDC
 print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on http://oeis.org for a " \
-                                            "named sequence!" + TextColors.ENDC + "\n"
+                          "named sequence!" + TextColors.ENDC + "\n"
