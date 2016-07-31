@@ -11,10 +11,12 @@ __web__ = "0rigen.net"
 __license__ = "GPL"
 __version__ = 3.0
 
-import base64
-import binascii
-import string
 import sys
+import string
+import binascii
+import base64
+import time
+import encodings
 
 ###############
 # Resources   #
@@ -30,8 +32,7 @@ atbash = string.maketrans(
 global crypto_in
 
 # letters 2 numbers dictionary
-l2nd = {x + 1: chr(ord('a') + x) for x in range(26)}
-
+l2nd = { x+1: chr(ord('a')+x) for x in range(26) }
 
 #############################
 # bcolors for coloring text #
@@ -48,7 +49,6 @@ class TextColors:
     UNDERLINE = '\033[4m'
     ENDC = '\033[0m'
 
-
 #######################
 # Get input from user #
 #######################
@@ -58,13 +58,17 @@ input_length = raw_input(
     TextColors.GREEN + '\nLength of Data Chunks (1 for text/ROTs/etc) --> ' + TextColors.ENDC)  # length of chunks
 print(
     '\n' + TextColors.GREEN + "Original Input (chunk length " + input_length + "): " + TextColors.BOLD +
-    crypto_in + TextColors.ENDC)
+                                                    crypto_in + TextColors.ENDC)
 
 # Convert inputted chunk size to an integer
 try:
     chunk_size = int(input_length)
+    done=true
 except ValueError:
-    print 'Chunk size must be an Integer!'
+    print TextColors.RED + TextColors.BOLD + '\nChunk size must be an Integer!'
+    print "I'm just going to assume you meant " + TextColors.BLUE + TextColors.BOLD + "'1'\n" + TextColors.ENDC
+    chunk_size = 1
+    time.sleep(2)
 
 # Strip out all spaces, they're nasty
 crypto_in = crypto_in.replace(" ", "")
@@ -76,7 +80,7 @@ try:
     inarray = list(crypto_in)  # turn the input into an array of elements
 
     # Break the array up into chunks of size input_length
-    list_of_chunks = lambda lst, sz: [lst[i:i + sz] for i in range(0, len(lst), sz)]
+    list_of_chunks = lambda lst, sz: [lst[i:i+sz] for i in range(0, len(lst), sz)]
     chunked_array = list_of_chunks(inarray, chunk_size)
 
     # create strings out of the chunks
@@ -105,7 +109,7 @@ try:
             print ord(thing),
 except:
     pass
-    print TextColors.RED + "Transforming into ASCII values failed." + TextColors.ENDC
+    print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
 
 ########################
 # ASCII Code --> Alpha #
@@ -119,7 +123,7 @@ try:
             print str(unichr(int(thing))),
 except:
     pass
-    print TextColors.RED + "Transforming into ASCII values failed." + TextColors.ENDC
+    print TextColors.RED+"Transforming into ASCII values failed."+TextColors.ENDC
 
 ########################
 #  Numbers to Letters  #
@@ -134,7 +138,7 @@ try:
             print(l2nd[ltr]),
 except:
     pass
-    print TextColors.RED + "Transforming into text failed." + TextColors.ENDC
+    print TextColors.RED+"Transforming into text failed."+TextColors.ENDC
 
 ########################
 #  Letters to Numbers  #
@@ -146,7 +150,7 @@ try:
         print value,
 except:
     pass
-    print TextColors.RED + "Couldn't turn letters into numbers" + TextColors.ENDC
+    print TextColors.RED+"Couldn't turn letters into numbers"+TextColors.ENDC
 
 ########################
 # CipherTxt --> Binary #
@@ -161,7 +165,7 @@ try:
             print '0b01100010'
 except:
     pass
-    print TextColors.RED + "Transforming into binary failed." + TextColors.ENDC
+    print TextColors.RED+"Transforming into binary failed."+TextColors.ENDC
 
 ########################
 #  Binary --> Integer  #
@@ -171,7 +175,20 @@ try:
     for item in chunked_array:
         print int(item, 2),  # puts the item into integer form, from base 2 :D Python so ez!
 except:
-    print TextColors.RED + "Transforming binary to Integer failed." + TextColors.ENDC
+    print TextColors.RED+"\nTransforming binary to Integer failed."+TextColors.ENDC
+
+########################
+# Binary --> ASCII Ltr #
+########################
+print '\n\n' + TextColors.PURPLE + TextColors.BOLD + 'Transformed from binary to text ' + TextColors.ENDC
+try:
+    for thing in chunked_array:
+            n = int(thing, 2)
+            print binascii.unhexlify('%x' % n),
+
+except:
+    pass
+    print TextColors.RED+"\nTransforming from binary to text failed."+TextColors.ENDC
 
 ########################
 #     Hex --> Text     #
@@ -179,10 +196,10 @@ except:
 print '\n\n' + TextColors.BOLD + TextColors.PURPLE + 'Transformed out of Hex into ASCII (ignoring chunk' \
                                                      ' size, sry not sry):' + TextColors.ENDC
 try:
-    out = ''.join(chr(int(crypto_in[i:i + 2], 16)) for i in range(0, len(crypto_in), 2))
+    out = ''.join(chr(int(crypto_in[i:i+2], 16)) for i in range(0, len(crypto_in), 2))
     print out
 except:
-    print TextColors.RED + "Transforming into hex failed." + TextColors.ENDC
+    print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
 
 ########################
 #        ROT           #
@@ -211,7 +228,9 @@ for key in range(len(alphabet)):
             # just add the symbol without encrypting/decrypting
             rot_out = rot_out + symbol
     # display the current key being tested, along with its decryption
-    print('Key #%s: %s' % (key, rot_out))  ########################
+    print('Key #%s: %s' % (key, rot_out))
+
+########################
 #        ATBASH        #
 ########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ATBASH ' + TextColors.ENDC
@@ -219,7 +238,7 @@ try:
     print string.translate(crypto_in, atbash)
 except:
     pass
-    print TextColors.RED + "ATBASH failed." + TextColors.ENDC
+    print TextColors.RED+"ATBASH failed."+TextColors.ENDC
 
 ########################
 #    Hex --> Base10    #
@@ -231,9 +250,9 @@ if chunk_size == 2:
             print int(h, 16),
     except:
         pass
-        print '\n' + TextColors.RED + "Single hex to base10 failed" + TextColors.ENDC
+        print '\n' + TextColors.RED+"Single hex to base10 failed"+TextColors.ENDC
 else:
-    print TextColors.RED + "It can't be hex2b10 since the chunk size isn't 2..." + TextColors.ENDC
+    print TextColors.RED+"It can't be hex2b10 since the chunk size isn't 2..."+TextColors.ENDC
 
 ########################
 #    Base64 Decoding   #
@@ -244,16 +263,16 @@ try:
     print base64.b64decode(encoded)
 except TypeError:
     pass
-    print TextColors.RED + 'TypeError Decoding Base64: Non-alphabet characters or improper padding of input' \
-                           'string, most likely' + TextColors.ENDC
+    print TextColors.RED+'TypeError Decoding Base64: Non-alphabet characters or improper padding of input' \
+                         'string, most likely'+TextColors.ENDC
 except:
     pass
-    print '\n' + TextColors.RED + "Base64 failed" + TextColors.ENDC
+    print '\n' + TextColors.RED+"Base64 failed"+TextColors.ENDC
 
 ########################
 # Print final warnings #
 ########################
 print TextColors.BOLD + TextColors.YELLOW + "\n\nSimple Checks Complete!  Hope you found what you were " \
                                             "looking for!\n" + TextColors.ENDC
-print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on http://oeis.org for a " \
-                          "named sequence!" + TextColors.ENDC + "\n"
+print TextColors.PURPLE + "Remember, if it's a sequence of numbers, it would be worth searching on" \
+                          "http://oeis.org for a named sequence!" + TextColors.ENDC + "\n"
