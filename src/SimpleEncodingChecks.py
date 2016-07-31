@@ -28,18 +28,6 @@ atbash = string.maketrans(
     "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
     "ZYXWVUTSRQPONzyxwvutsrqponMLKJIHGFEDCBAmlkjihgfedcba")
 
-# Rot13 translate key
-global rot13
-rot13 = string.maketrans(
-    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-    "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm")
-
-# Rot23 translate key
-global rot23
-rot23 = string.maketrans(
-    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-    "XYZABCDEFGHIJxyzabcdefghijKLMNOPQRSTUVWklmnopqrstuvw")
-
 # global var to hold the cipher in
 global crypto_in
 
@@ -214,24 +202,33 @@ except:
     print TextColors.RED+"Transforming into hex failed."+TextColors.ENDC
 
 ########################
-#        ROT13         #
+#        ROT           #
 ########################
-print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT13: ' + TextColors.ENDC
-try:
-    print string.translate(crypto_in, rot13)
-except:
-    pass
-    print TextColors.RED+"ROT13 failed."+TextColors.ENDC
+print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT: ' + TextColors.ENDC
+message = crypto_in
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # loop through every possible key
+for key in range(len(alphabet)):
 
-########################
-#         ROT23        #
-########################
-print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT23: ' + TextColors.ENDC
-try:
-    print string.translate(crypto_in, rot23)
-except:
-    pass
-    print TextColors.RED+"ROT23 failed."+TextColors.ENDC
+    rot_out = ''
+
+    # rot each letter in the input ciphertext
+    for symbol in message:
+        if symbol.capitalize() in alphabet:
+            num = alphabet.find(symbol.capitalize())  # get the number of the symbol
+            num = num + key
+
+            # handle the wrap-around if num is 26 or larger or less than 0
+            if num > 25:
+                num = num - 26
+
+            # add number's symbol at the end of translated
+            rot_out = rot_out + alphabet[num]
+
+        else:
+            # just add the symbol without encrypting/decrypting
+            rot_out = rot_out + symbol
+    # display the current key being tested, along with its decryption
+    print('Key #%s: %s' % (key, rot_out))
 
 ########################
 #        ATBASH        #
