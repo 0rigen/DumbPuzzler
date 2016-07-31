@@ -63,7 +63,7 @@ print(
 # Convert inputted chunk size to an integer
 try:
     chunk_size = int(input_length)
-    done=true
+    done=True
 except ValueError:
     print TextColors.RED + TextColors.BOLD + '\nChunk size must be an Integer!'
     print "I'm just going to assume you meant " + TextColors.BLUE + TextColors.BOLD + "'1'\n" + TextColors.ENDC
@@ -206,28 +206,24 @@ except:
 ########################
 print '\n' + TextColors.BOLD + TextColors.PURPLE + 'ROT: ' + TextColors.ENDC
 message = crypto_in
-alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # loop through every possible key
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 for key in range(len(alphabet)):
 
     rot_out = ''
 
-    # rot each letter in the input ciphertext
-    for symbol in message:
+    for symbol in message:       # rot each letter in the input ciphertext
         if symbol.capitalize() in alphabet:
-            num = alphabet.find(symbol.capitalize())  # get the number of the symbol
+            num = alphabet.find(symbol.capitalize())
             num = num + key
 
-            # handle the wrap-around if num is 26 or larger or less than 0
-            if num > 25:
+            if num > 25:            # correct wrap-around
                 num = num - 26
 
-            # add number's symbol at the end of translated
-            rot_out = rot_out + alphabet[num]
+            rot_out = rot_out + alphabet[num]  # add to output string
 
         else:
-            # just add the symbol without encrypting/decrypting
             rot_out = rot_out + symbol
-    # display the current key being tested, along with its decryption
+
     print('Key #%s: %s' % (key, rot_out))
 
 ########################
