@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-""" Performs checks for the 'simple' ciphers
+""" Performs checks for the 'simple' encode
 
 This module is called when the user wants to perform (S)imple
-checks.  The module will run through a series of ciphers
+checks.  The module will run through a series of encode
 and all output (valid or otherwise) is displayed in the console.
 """
 __author__ = "0rigen"
