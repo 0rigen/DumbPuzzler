@@ -11,27 +11,21 @@ __web__ = "0rigen.net"
 __license__ = "GPL"
 __version__ = 3.0
 
+'''
+OLD FILE DO NOT USE
+REFACTORING THIS OUT
+'''
+
 import base64
 import binascii
-import string
+# import string
 import sys
 import time
+
 
 ###############
 # Resources   #
 ###############
-
-# Atbash translation key
-global atbash
-atbash = str.maketrans(
-    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-    "ZYXWVUTSRQPONzyxwvutsrqponMLKJIHGFEDCBAmlkjihgfedcba")
-
-# global var to hold the cipher in
-global crypto_in
-
-# letters 2 numbers dictionary
-l2nd = {x + 1: chr(ord('a') + x) for x in range(26)}
 
 
 #############################
@@ -308,13 +302,7 @@ for key in range(len(alphabet)):
 ########################
 #        ATBASH        #
 ########################
-try:
-    output = str(string.translate(crypto_in, atbash))  # Use the dictionary defined at beginning
-    print(TextColors.GREEN + '\n[-] ' + "ATBASH: " + TextColors.ENDC)
-    print(output)
-except:
-    pass
-    print(TextColors.RED + '\n[X] ' + TextColors.ENDC + "ATBASH failed." + TextColors.ENDC)
+
 
 ########################
 #    Hex --> Base10    #
